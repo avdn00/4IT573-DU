@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo detaily</title>
+  </head>
+  <body>
+    <h1><%= todo.text %></h1>
+    <p>Stav: <%= todo.done ? 'Hotovo' : 'Nehotovo' %></p>
+    <a href="/toggle/<%= todo.id %>">Změna stavu</a>
+    <a
+      href="/delete/<%= todo.id %>"
+      onclick="return confirm('Opravdu odstranit?');"
+      >Odstranit</a
+    >
+    <form action="/update/<%= todo.id %>" method="post">
+      <input type="text" name="text" value="<%= todo.text %>" />
+      <button type="submit">Změnit titulek</button>
+    </form>
+
+    <a href="/">Zpět do seznamu</a>
+  </body>
+</html>
