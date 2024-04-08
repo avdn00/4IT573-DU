@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= todo.title %></title>
+  </head>
+  <body>
+    <div id="todoDetails"><%- include('_todoDetails') %></div>
+
+    <a href="/">Zpět na seznam</a>
+
+    <script>
+      const ws = new WebSocket("ws://localhost:3000");
+
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: "viewing", todoId: "<%= todo.id %>" }));
+      };
+
+      ws.addEventListener("message", (ev) => {
+        const data = JSON.parse(ev.data);
+
+        if (data.type === "todoDetails" && data.todoId === "<%= todo.id %>") {
+          const el = document.getElementById("todoDetails");
+          el.innerHTML = data.html;
+        }
+      });
+    </script>
+  </body>
+</html>
